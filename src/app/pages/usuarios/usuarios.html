@@ -1,0 +1,35 @@
+<!-- login -->
+<div class="login-container" *ngIf="tela === 'login'">
+  <h2>Login</h2>
+
+  <div class="campo">
+    <input type="email" placeholder="Email">
+  </div>
+
+  <div class="campo">
+    <input type="password" placeholder="Senha">
+  </div>
+
+  <button>Entrar</button>
+  <p (click)="tela = 'cadastro'">Não tenho cadastro</p>
+</div>
+
+<!-- cadastro -->
+<div class="login-container" *ngIf="tela === 'cadastro'">
+  <h2>Cadastro</h2>
+
+  <div class="campo">
+    <input type="text" placeholder="Nome">
+  </div>
+
+  <div class="campo">
+    <input type="email" placeholder="Email">
+  </div>
+
+  <div class="campo">
+    <input type="password" placeholder="Senha">
+  </div>
+
+  <button>Cadastrar</button>
+  <p (click)="tela = 'login'">Já tenho cadastro</p>
+</div>

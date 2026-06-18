@@ -21,4 +21,15 @@ routes.post('/pagamentos', autenticar, PagamentoController.create);
 routes.post('/produtos', autenticar, apenasAdmin, ProdutoController.create);
 routes.get('/admin/relatorios', autenticar, apenasAdmin, RelatorioController.index);
 
+routes.put('/produtos/:id',    autenticar, apenasAdmin, ProdutoController.update);
+routes.delete('/produtos/:id', autenticar, apenasAdmin, ProdutoController.destroy);
+
+const upload = require('./middlewares/upload');
+
+routes.post('/upload', autenticar, apenasAdmin, upload.single('imagem'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'Nenhum arquivo enviado' });
+  const url = `http://localhost:3000/uploads/${req.file.filename}`;
+  return res.json({ url });
+});
+
 module.exports = routes;

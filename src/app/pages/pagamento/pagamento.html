@@ -1,0 +1,86 @@
+<div class="pagamento-container">
+  <h2>Pagamento</h2>
+
+  <div class="numero-pedido">
+    <span>Pedido Nº</span>
+    <strong>{{ numeroPedido }}</strong>
+  </div>
+
+  <div class="metodos">
+    <button 
+      [class.ativo]="metodo === 'pix'" 
+      (click)="metodo = 'pix'">PIX</button>
+    <button 
+      [class.ativo]="metodo === 'debito'" 
+      (click)="metodo = 'debito'">Débito</button>
+    <button 
+      [class.ativo]="metodo === 'credito'" 
+      (click)="metodo = 'credito'">Crédito</button>
+  </div>
+
+  <!-- PIX -->
+  <div class="form-pagamento" *ngIf="metodo === 'pix'">
+    <div class="pix-box">
+      <p>Chave PIX</p>
+      <strong>pagamentos@lojacamisetas.com</strong>
+      <button class="copiar" (click)="copiarChave()">{{ copiado ? '✓ Copiado!' : 'Copiar chave' }}</button>
+    </div>
+    <p class="obs">Após o pagamento, envie o comprovante pelo WhatsApp.</p>
+  </div>
+
+  <!-- DÉBITO -->
+  <div class="form-pagamento" *ngIf="metodo === 'debito'">
+    <div class="campo">
+      <label>Número do cartão</label>
+      <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+    </div>
+    <div class="linha">
+      <div class="campo">
+        <label>Validade</label>
+        <input type="text" placeholder="MM/AA" maxlength="5">
+      </div>
+      <div class="campo">
+        <label>CVV</label>
+        <input type="text" placeholder="000" maxlength="3">
+      </div>
+    </div>
+    <div class="campo">
+      <label>Nome no cartão</label>
+      <input type="text" placeholder="Como está no cartão">
+    </div>
+  </div>
+
+  <!-- CRÉDITO -->
+  <div class="form-pagamento" *ngIf="metodo === 'credito'">
+    <div class="campo">
+      <label>Número do cartão</label>
+      <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+    </div>
+    <div class="linha">
+      <div class="campo">
+        <label>Validade</label>
+        <input type="text" placeholder="MM/AA" maxlength="5">
+      </div>
+      <div class="campo">
+        <label>CVV</label>
+        <input type="text" placeholder="000" maxlength="3">
+      </div>
+    </div>
+    <div class="campo">
+      <label>Nome no cartão</label>
+      <input type="text" placeholder="Como está no cartão">
+    </div>
+    <div class="campo">
+      <label>Parcelas</label>
+      <select [(ngModel)]="parcelas">
+        <option *ngFor="let p of listaParcelas" [value]="p.valor">
+          {{ p.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <button class="confirmar" *ngIf="metodo" (click)="confirmar()">
+    Confirmar Pagamento
+  </button>
+</div>

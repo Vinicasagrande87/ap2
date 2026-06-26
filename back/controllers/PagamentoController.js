@@ -1,15 +1,18 @@
-const db = require('../database/connections');
+const PagamentoService = require('../services/PagamentoService');
 
 module.exports = {
-    async salvar(dados) {
-        // Lógica de gerar número do pedido fica no service
-        const numeroPedido = 'PED-' + Math.floor(100000 + Math.random() * 900000);
-        
-        await db('pagamentos').insert({
-            ...dados,
-            pedido_numero: numeroPedido
-        });
+    async create(req, res) {
+        try {
+            const numeroPedido = await PagamentoService.salvar(req.body);
 
-        return numeroPedido;
+            return res.status(201).json({
+                message: 'Pagamento registrado com sucesso',
+                numeroPedido
+            });
+        } catch (error) {
+            return res.status(500).json({
+                error: 'Erro ao registrar pagamento'
+            });
+        }
     }
 };
